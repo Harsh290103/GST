@@ -24,11 +24,13 @@ connection.connect((err) => {
 
 //------------------------User Table------------------------------------------------->
 app.get('/user/current', (req, res) => {
+  console.log("Session in /user/current:", req.session);  // <-- debug here
+
   if (!req.session.userId) {
     return res.status(401).json({ error: "Not logged in" });
   }
 
-  const query = "SELECT id, user_email, first_name, last_name FROM user WHERE id = ?";
+  const query = "SELECT id, user_email, first_name, last_name, mobile_no, last_login FROM user WHERE id = ?";
 
   connection.query(query, [req.session.userId], (error, results) => {
     if (error) {
@@ -43,6 +45,7 @@ app.get('/user/current', (req, res) => {
     res.json(results[0]);
   });
 });
+
 
 // GET all users
 app.get("/user", (request, response) => {
@@ -768,6 +771,8 @@ app.post('/login', (req, res) => {
 
     // Save user ID in session
     req.session.userId = user.id;
+
+    console.log("Session after login:", req.session); // <-- debug here
 
     // Update last_login timestamp
     const now = new Date();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "./axiosConfig"; // ✅ Axios instance with `withCredentials: true`
+import api from "./axiosConfig"; 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = () => {
@@ -38,7 +38,7 @@ const Login = () => {
     const loginData = { user_email: email, password: password };
 
     try {
-      const response = await api.post("/emps/login", loginData);
+      const response = await api.post("/emps/login", loginData, { withCredentials: true });
 
       if (response.status === 200) {
         alert("Login successful!");

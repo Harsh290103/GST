@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import api from "./axiosConfig";
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
@@ -8,7 +9,7 @@ const UserProfile = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:9000/emps/user/current")
+    api.get("/emps/user/current", { withCredentials: true })
       .then(response => {
         setUser(response.data);
         setLoading(false);
